@@ -1,0 +1,121 @@
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EU & EWR Search for Google</title>
+<center>
+<h1>Search Google Europe Countries</h1>
+<form>
+	<input type="text" id="searchterm">
+	<button id="search">Create Google Search URL</button>
+</form>
+<p id="searchurl">
+</p>
+<h2>EU</h2>
+<table id="eu">
+
+</table>
+<h2>Additonal EWR</h2>
+<table id="ewr">
+
+</table>
+
+<h2>Maybe</h2>
+<table id="maybe">
+</table>
+
+</center>
+<script>
+let eu = {
+	"Europe": "eu",
+	"Austria": "at",
+	"Belgium": "be",
+	"Bulgaria": "bg",
+	"Croatia": "hr",
+	"Cyprus": "cy",
+	"Czech Republic": "cz",
+	"Denmark": "dk",
+	"Estonia": "es",
+	"Germany": "de",
+	"Estland": "ee",
+	"Finland": "fi",
+	"France": "fr",
+	"Germany": "de",
+	"Greece": "gr",
+	"Hungary": "hr",
+	"Ireland": "ir",
+	"Italy": "it",
+	"Latvia": "lv",
+	"Lithuania": "lt",
+	"Luxembourg": "lu",
+	"Malta": "mt",
+	"Netherlands": "nl",
+	"Poland": "pl",
+	"Portugal": "pt",
+	"Romania": "ro",
+	"Slovakia": "sk",
+	"Slovenia": "si",
+	"Spain": "es",
+	"Sweden": "se",
+	"United Kingdom": "co.uk"
+}
+
+let ewr = {
+	"Iceland":"is",
+	"Liechtenstein":"li",
+	"Norwegen":"no"
+}
+
+let maybe = {
+	"Switzerland":"ch"
+}
+
+let e_eu = document.getElementById("eu");
+let e_ewr = document.getElementById("ewr");
+let e_m = document.getElementById("maybe");
+
+function createTr(htmlString) {
+  var tr = document.createElement('tr');
+  tr.innerHTML = htmlString.trim();
+  return tr; 
+}
+
+for(const a in eu)
+{
+	e_eu.appendChild(createTr("<td><input class='tld' type='checkbox' checked value='"+eu[a]+"'></td><td>."+eu[a]+"</td><td>"+a+"</td>"));
+}
+
+for(const a in ewr)
+{
+	e_ewr.appendChild(createTr("<td><input class='tld' type='checkbox'  value='"+ewr[a]+"'></td><td>."+ewr[a]+"</td><td>"+a+"</td>"));
+}
+
+for(const a in maybe)
+{
+	e_m.appendChild(createTr("<td><input class='tld' type='checkbox'  value='"+maybe[a]+"'></td><td>."+maybe[a]+"</td><td>"+a+"</td>"));
+}
+
+const search = document.getElementById("search");
+
+let searchNow = (e) =>
+{
+	let tlds = document.getElementsByClassName('tld');
+	let s = document.getElementById('searchterm').value;
+	for (let a of tlds)
+	{
+		let checked = a.checked;
+		let value= a.getAttribute('value');
+		console.log(value+"->"+checked);
+		if(checked)
+		{
+			s = s + " site:."+value+" OR"
+		}
+	}
+	s = s.slice(0,-3);
+	console.log(s);
+	let u = document.getElementById('searchurl');
+	u.innerHTML="<a href='https://www.google.com/search?q="+s+"' target='_blank'>https://www.google.com/search?q="+s+"</a>";
+	e.preventDefault();
+}
+
+
+search.addEventListener('click', searchNow)
+
+</script>
